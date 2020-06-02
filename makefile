@@ -1,51 +1,50 @@
+include ./amrwb/amrwb_setting.mk
+
+
 DIR_SEC_AUT = ./sec
 DIR_BUILD = ./build
 
+
+AMRWB_LIBOBJ2 := $(foreach n, $(AMRWB_LIBOBJ), $(UP_AMRWB_BUILD)/$(n))
 TEST_OBJ := 
 # TEST_OBJ += ${DIR_BUILD}/Authentication.o 
-# TEST_OBJ += ${DIR_BUILD}/Sip_Response.o 
-TEST_OBJ += ${DIR_BUILD}/UDP.o
+TEST_OBJ += ${DIR_BUILD}/Sip_Response.o 
+TEST_OBJ += ${DIR_BUILD}/rtp.o 
+TEST_OBJ += ${DIR_BUILD}/UDP.o 
+TEST_OBJ += ${DIR_BUILD}/sctp_client.o 
+TEST_OBJ += ${AMRWB_LIBOBJ2}
 
-test : clean dir ${TEST_OBJ}
+# test: clean dir amrwb ${TEST_OBJ} 
+test: clean dir ${TEST_OBJ} 
 	g++ ${TEST_OBJ} -o ./ims.out -lpthread
-dir :
+dir:
 	mkdir -p build
+amrwb: clean_Amrwb_obj
+	cd amrwb; make -f amrwb.mk amrwb_lib; cd ..
+
+
+
+
+
 $(DIR_BUILD)/UDP.o: UDP.cpp
 	g++ -c $< -o $@
 
-$(DIR_BUILD)/Authentication.o: AKAv1-MD5/Authentication.cpp
+$(DIR_BUILD)/sctp_client.o: sctp_client.cpp
 	g++ -c $< -o $@
 
-$(DIR_BUILD)/Sip_Response.o: Sip_Response/Sip_Response.cpp
+$(DIR_BUILD)/Authentication.o: AKAv1-MD5/Authentication.cpp AKAv1-MD5/Authentication.h 
+	g++ -c $< -o $@
+
+$(DIR_BUILD)/Sip_Response.o: Sip_Response/Sip_Response.cpp  Sip_Response/Sip_Response.h 
+	g++ -c $< -o $@
+
+$(DIR_BUILD)/rtp.o: rtp.cpp  rtp.h
 	g++ -c $< -o $@
 
 
-# ${DIR_BUILD}/s1ap_decode.o : s1ap_decode.cpp s1ap_decode.h
-# 	g++ -c s1ap_decode.cpp -o ${DIR_BUILD}/s1ap_decode.o
-# ${DIR_BUILD}/s1ap_encode.o : s1ap_encode.cpp s1ap_encode.h
-# 	g++ -c s1ap_encode.cpp -o ${DIR_BUILD}/s1ap_encode.o
-# ${DIR_BUILD}/s1ap_common.o : s1ap_common.cpp s1ap_common.h
-# 	g++ -c s1ap_common.cpp -o ${DIR_BUILD}/s1ap_common.o
-# ${DIR_BUILD}/nas_decode.o : nas_decode.cpp nas_decode.h
-# 	g++ -c nas_decode.cpp -o ${DIR_BUILD}/nas_decode.o
-# ${DIR_BUILD}/nas_encode.o : nas_encode.cpp nas_encode.h
-# 	g++ -c nas_encode.cpp -o ${DIR_BUILD}/nas_encode.o
-# ${DIR_BUILD}/s1ap.o : s1ap.cpp s1ap.h
-# 	g++ -c s1ap.cpp -o ${DIR_BUILD}/s1ap.o
-# ${DIR_BUILD}/spgw.o : spgw.cpp spgw.h
-# 	g++ -c spgw.cpp -o ${DIR_BUILD}/spgw.o
-# ${DIR_BUILD}/mme.o : mme.cpp mme.h
-# 	g++ -c mme.cpp -o ${DIR_BUILD}/mme.o
-# ${DIR_BUILD}/f1.o : ${DIR_SEC_AUT}/f1.cpp ${DIR_SEC_AUT}/f1.h
-# 	g++ -c ${DIR_SEC_AUT}/f1.cpp -o ${DIR_BUILD}/f1.o
-# ${DIR_BUILD}/sha256.o : ${DIR_SEC_AUT}/sha256.cpp ${DIR_SEC_AUT}/sha256.h
-# 	g++ -c ${DIR_SEC_AUT}/sha256.cpp -o ${DIR_BUILD}/sha256.o
-# ${DIR_BUILD}/snow_3g.o : ${DIR_SEC_AUT}/snow_3g.cpp ${DIR_SEC_AUT}/snow_3g.h
-# 	g++ -c ${DIR_SEC_AUT}/snow_3g.cpp -o ${DIR_BUILD}/snow_3g.o
 
-
-	
-
-
+.phony: clean clean_Amrwb_obj
 clean:
 	-rm ${DIR_BUILD}/*.o ./ims.out
+clean_Amrwb_obj:
+	-rm $(UP_AMRWB_BUILD)/*.o

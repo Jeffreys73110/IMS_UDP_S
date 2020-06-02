@@ -1,6 +1,0 @@
-WWW-Authenticate: Digest realm="ims.mnc001.mcc001.3gppnetwork.org",nonce="AAAAAAAAAAAAAAAAAAAAAM8tbD5LmYAAvfNHPvh1+8w=",algorithm=AKAv1-MD5
-
-Security-Server: ipsec-3gpp;prot=esp;mod=trans;spi-c=2815619481;spi-s=136158516;port-c=50717;port-s=50718;ealg=null;alg=hmac-md5-96;q=0.1
-
-
-

@@ -1,10 +1,12 @@
+#ifndef __AUTHENTICATION_H__
+#define __AUTHENTICATION_H__
+
 #include <string.h>
-#include<stdio.h>
+#include <stdio.h>
+#include <stdint.h>
 
-typedef unsigned char	uint8_t; 
+// typedef unsigned char	uint8_t; 
 
-uint8_t c2u(char s){
-	if(s>96) return s-87;
-	if(s>64) return s-55;
-	if(s>47) return s-48;
-}
+
+
+#endif	// __AUTHENTICATION_H__

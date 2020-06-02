@@ -1,15 +1,0 @@
-SIP/2.0 401 Unauthorized
-Via: SIP/2.0/UDP 192.168.200.10;rport;branch=z9hG4bKYC0CJKcKL8VYhI
-From: <sip:001010123456061@ims.mnc001.mcc001.3gppnetwork.org>;tag=sFmEv8qpGWcBBi
-To: <sip:001010123456061@ims.mnc001.mcc001.3gppnetwork.org>
-Call-ID: LPk0AXlmBegkM7aniTq
-Max-Forwards: 70
-Expires: 600000
-User-Agent: VoLTE/WFC UA
-Contact: <sip:192.168.200.10:5060;transport=udp>;+sip.instance="<urn:gsma:imei:35611207-004302-0>";+g.3gpp.icsi-ref="urn%3Aurn-7%3A3gpp-service.ims.icsi.mmtel";+g.3gpp.smsip;audio
-Supported: path, gruu, sec-agree
-Allow: INVITE, ACK, CANCEL, BYE, MESSAGE, PRACK
-WWW-Authenticate: Digest realm="ims.mnc001.mcc001.3gppnetwork.org",nonce="AAAAAAAAAAAAAAAAAAAAAM8tbD5LmYAAvfNHPvh1+8w=",algorithm=AKAv1-MD5
-Security-Server: ipsec-3gpp;prot=esp;mod=trans;spi-c=2815619481;spi-s=136158516;port-c=50717;port-s=50718;ealg=null;alg=hmac-md5-96;q=0.1
-CSeq: 1 REGISTER
-Content-Length: 0

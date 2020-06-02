@@ -1,17 +1,0 @@
-MESSAGE sip:+@ims.mnc001.mcc001.3gppnetwork.org;user=phone SIP/2.0
-Via: SIP/2.0/UDP 192.168.200.3;rport;branch=z9hG4bKrHrScsVU8FLGij
-From: <sip:+11234567890@test.3gpp.com>;tag=VGCAvLjTYvCQB0
-To: <sip:+@ims.mnc001.mcc001.3gppnetwork.org;user=phone>
-Content-Type: application/vnd.3gpp.sms
-User-Agent: VoLTE/WFC UA
-Call-ID: Ic1IV6LeyyvAXaqUfAY
-CSeq: 2 MESSAGE
-P-Access-Network-Info: 3GPP-E-UTRAN-FDD;utran-cell-id-3gpp=001010001000000a
-Require: sec-agree
-Proxy-Require: sec-agree
-Security-Verify: ipsec-3gpp;prot=esp;mod=trans;spi-c=2815619481;spi-s=136158516;port-c=50717;port-s=50718;ealg=null;alg=hmac-md5-96;q=0.1
-Max-Forwards: 70
-Route: <sip:192.168.7.104:5060;lr>
-Content-Length: 22
-
-

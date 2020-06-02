@@ -1,6 +1,6 @@
 
 #include "Authentication.h"
-#include "string.h"
+
 
 typedef unsigned char u8;
 
@@ -44,6 +44,13 @@ u8 Xtime[256] = {
 	219,217,223,221,211,209,215,213,203,201,207,205,195,193,199,197,
 	251,249,255,253,243,241,247,245,235,233,239,237,227,225,231,229
 };
+
+uint8_t c2u(char s)
+{
+	if(s>96) return s-87;
+	if(s>64) return s-55;
+	if(s>47) return s-48;
+}
 
 void ComputeOPc(u8 op_c[16])
 {
