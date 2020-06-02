@@ -1,0 +1,53 @@
+INVITE tel:987654321;phone-context=001.01.eps.ims.mnc001.mcc001.3gppnetwork.org SIP/2.0
+Via: SIP/2.0/UDP 192.168.200.11;rport;branch=z9hG4bKh5NrYAazAC0qlz
+From: <sip:+886987654322@test.3gpp.com>;tag=eE6T5YgHCGk3BA
+P-Preferred-Identity: <sip:+886987654322@test.3gpp.com>
+Contact: <sip:+886987654322@192.168.200.11:5060;transport=udp>;+sip.instance="<urn:gsma:imei:35611207-004302-0>";+g.3gpp.icsi-ref="urn%3Aurn-7%3A3gpp-service.ims.icsi.mmtel";+g.3gpp.mid-call;+g.3gpp.srvcc-alerting
+To: <tel:987654321;phone-context=001.01.eps.ims.mnc001.mcc001.3gppnetwork.org>
+Allow: INVITE, ACK, CANCEL, BYE, UPDATE, REFER, NOTIFY, MESSAGE, PRACK, OPTIONS
+Supported: 100rel, precondition, replaces, timer
+Accept: application/sdp
+Max-Forwards: 70
+User-Agent: VoLTE/WFC UA
+P-Preferred-Service: urn:urn-7:3gpp-service.ims.icsi.mmtel
+Accept-Contact: *;+g.3gpp.icsi-ref="urn%3Aurn-7%3A3gpp-service.ims.icsi.mmtel"
+P-Early-Media: supported
+CSeq: 1 INVITE
+Call-ID: bjk0VVs5tBP6qMt1DK4
+Session-Expires: 60000
+Min-SE: 1800
+Route: <sip:192.168.7.109:5060;lr>
+Content-Type: application/sdp
+P-Access-Network-Info: 3GPP-E-UTRAN-FDD;utran-cell-id-3gpp=001010001000000a
+Require: sec-agree
+Proxy-Require: sec-agree
+Security-Verify: ipsec-3gpp;prot=esp;mod=trans;spi-c=2815619481;spi-s=136158516;port-c=50717;port-s=50718;ealg=null;alg=hmac-md5-96;q=0.1
+Content-Length: 595
+
+v=0
+o=- 7 7 IN IP4 192.168.200.11
+s=mtk voice call
+c=IN IP4 192.168.200.11
+b=AS:41
+b=RS:512
+b=RR:1537
+t=0 0
+m=audio 40000 RTP/AVP 98 97 100 105
+b=AS:41
+b=RS:512
+b=RR:1537
+a=rtpmap:98 AMR-WB/16000/1
+a=ptime:20
+a=maxptime:240
+a=rtpmap:97 AMR/8000/1
+a=rtpmap:100 telephone-event/8000/1
+a=rtpmap:105 telephone-event/16000/1
+a=fmtp:98 mode-change-capability=2;max-red=0
+a=fmtp:97 mode-change-capability=2;max-red=0
+a=fmtp:100 0-15
+a=fmtp:105 0-15
+a=curr:qos local none
+a=curr:qos remote none
+a=des:qos mandatory local sendrecv
+a=des:qos optional remote sendrecv
+a=sendrecv
