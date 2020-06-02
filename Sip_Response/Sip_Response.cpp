@@ -1,9 +1,9 @@
-#include "stdafx.h"
+#include "../StdAfx.h"
 #include <stdlib.h>
 #include "string.h"
 #include "Sip_Response.h"
 
-int Get_Position(char *S1,char *Head)
+int Get_Position(char *S1, const char *Head)
 {
 	int  i,j;
 	for (i=0;i<(int)(strlen(S1)-strlen(Head));i++)
@@ -32,10 +32,10 @@ int Get_NextLine(char *S1)
 	else return -1;
 }
 
-
-int Get_request(char* S11,int caller){
+int Get_request(char* S11,int caller)
+{
 	
-	char *header_name[] = {"CSeq","Expires"};
+	const char *header_name[] = {"CSeq","Expires"};
 	char q[100]={0};
 	int len = Get_NextLine(&S11[Get_Position(S11,header_name[0])])-2;
 	
@@ -127,7 +127,7 @@ void res_auth_401(char* S44,char* S11){
 	
 	int flag=0;
 	
-	char *header_name[] = {"Via","From","To","Call-ID","Max-Forwards","Expires"
+	const char *header_name[] = {"Via","From","To","Call-ID","Max-Forwards","Expires"
 							,"User-Agent","WWW-Authenticate"
 							,"Security-Server","CSeq","Require","Content-Length"};
 
@@ -173,14 +173,14 @@ void res_auth_401(char* S44,char* S11){
 	}
 	 	 
 	strcat(S401, "\r\n");
-	sprintf(S44,S401);	
+	strcpy(S44,S401);	
 }
 
 
 void res_200_ok(char* S44,char* S11){
 	char S200[4000],SS2[2000];
 	int flag=0;
-	char *header_name[] = {"Via","From","To","Call-ID"
+	const char *header_name[] = {"Via","From","To","Call-ID"
 							,"User-Agent","P-Associated-URI","P-Associated-URI","Contact","CSeq","Content-Length"};
 	
 	sprintf(S200,"SIP/2.0 200 OK\r\n");
@@ -219,7 +219,7 @@ void res_200_ok(char* S44,char* S11){
 		}
 	}
 	strcat(S200, "\r\n");
-	sprintf(S44,S200);
+	strcpy(S44,S200);
 	
 }
 
@@ -227,10 +227,10 @@ void res_200_ok(char* S44,char* S11){
 void res_202_Accepted(char* S44,char* S11){
 	char S200[4000],SS2[2000];
 	int flag=0;
-	char *header_name[] = {"Via","From","To","Call-ID"
+	const char *header_name[] = {"Via","From","To","Call-ID"
 							,"User-Agent","P-Associated-URI","P-Associated-URI","Contact","CSeq","Content-Length"};
 							
-	sprintf(S200,"SIP/2.0 202 Accepted\r\n");
+	strcpy(S200,"SIP/2.0 202 Accepted\r\n");
 	
 	
 	
@@ -242,7 +242,7 @@ void res_202_Accepted(char* S44,char* S11){
 void res_test_200_ok(char* S44,char* S11){
 	char S200[4000],SS2[2000];
 	int flag=0;
-	char *header_name[] = {"Via","From","To","Call-ID","CSeq","Expires","Max-Forwards"
+	const char *header_name[] = {"Via","From","To","Call-ID","CSeq","Expires","Max-Forwards"
 							,"Content-Length","Contact"};
 							
 	sprintf(S200,"SIP/2.0 200 OK\r\n");
@@ -281,7 +281,7 @@ void res_test_200_ok(char* S44,char* S11){
 		}
 	}
 	strcat(S200, "\r\n");
-	sprintf(S44,S200);
+	strcpy(S44,S200);
 }
 //********************************************************************************
 
@@ -289,7 +289,7 @@ void res_test_200_ok(char* S44,char* S11){
 void res_test_100_trying(char* S44,char* S11){
 	char S200[4000],SS2[2000];
 	int flag=0;
-	char *header_name[] = {"Via","To:","From","Call-ID"
+	const char *header_name[] = {"Via","To:","From","Call-ID"
 							,"CSeq","Content-Length"};	
 							
 	sprintf(S200,"SIP/2.0 100 Trying\r\n");
@@ -330,7 +330,7 @@ void res_test_100_trying(char* S44,char* S11){
 				
 	}
 	strcat(S200, "\r\n");
-	sprintf(S44,S200);
+	strcpy(S44,S200);
 
 }
 //*********************************************************************************
@@ -340,7 +340,7 @@ void res_test_100_trying(char* S44,char* S11){
 void res_test_183(char* S44,char* S11){
 	char S200[4000],SS2[4000];
 	int flag=0;
-	char *header_name[] = {"Via","To:","From","Call-ID"};	
+	const char *header_name[] = {"Via","To:","From","Call-ID"};	
 	
 	sprintf(S200,"SIP/2.0 183 Session Progress\r\n");
 	
@@ -386,7 +386,7 @@ void res_test_183(char* S44,char* S11){
 	}
 	fclose(fp);
 	
-	sprintf(S44,S200);
+	strcpy(S44,S200);
 }
 							
 //********************************************************************************
@@ -395,7 +395,7 @@ void res_test_183(char* S44,char* S11){
 void res_test_200_prack(char* S44,char* S11){
 	char S200[4000],SS2[2000];
 	int flag=0;
-	char *header_name[] = {"Call-ID","To:","From","CSeq","Content-Length","Via","Max-Forwards","RAck","Contact"};	
+	const char *header_name[] = {"Call-ID","To:","From","CSeq","Content-Length","Via","Max-Forwards","RAck","Contact"};	
 	
 	sprintf(S200,"PRACK sip:192.168.200.10:5060 SIP/2.0\r\n");
 	
@@ -452,7 +452,7 @@ void res_test_200_prack(char* S44,char* S11){
 		
 	}	
 	strcat(S200, "\r\n");
-	sprintf(S44,S200);
+	strcpy(S44,S200);
 	
 }
 
@@ -463,7 +463,7 @@ void res_test_200_prack(char* S44,char* S11){
 void res_test_update(char* S44,char* S11){
 	char S200[4000],SS2[2000];
 	int flag=0;
-	char *header_name[] = {"Call-ID","To:","From","CSeq","Via","Content-Length","Content-Type"};	
+	const char *header_name[] = {"Call-ID","To:","From","CSeq","Via","Content-Length","Content-Type"};	
 	
 	sprintf(S200,"UPDATE sip:192.168.200.10:5060 SIP/2.0\r\n");
 	
@@ -513,7 +513,7 @@ void res_test_update(char* S44,char* S11){
 	}
 	fclose(fp);
 	
-	sprintf(S44,S200);
+	strcpy(S44,S200);
 
 }
 //********************************************************************************
@@ -522,7 +522,7 @@ void res_test_update(char* S44,char* S11){
 void res_test_180_ring(char* S44,char* S11){
 	char S200[4000],SS2[2000];
 	int flag=0;
-	char *header_name[] = {"Call-ID","Via","To:","From","CSeq","Content-Length","Contact","Allow"};	
+	const char *header_name[] = {"Call-ID","Via","To:","From","CSeq","Content-Length","Contact","Allow"};	
 							
 							
 	sprintf(S200,"SIP/2.0 180 Ringing\r\n");
@@ -574,7 +574,7 @@ void res_test_180_ring(char* S44,char* S11){
 				
 	}
 	strcat(S200, "\r\n");
-	sprintf(S44,S200);
+	strcpy(S44,S200);
 }
 //********************************************************************************
 
@@ -582,7 +582,7 @@ void res_test_180_ring(char* S44,char* S11){
 void res_test_200_ok_ring(char* S44,char* S11){
 	char S200[4000],SS2[2000];
 	int flag=0;
-	char *header_name[] = {"Call-ID","Via","To:","From","CSeq","Content-Length","Contact","Allow","Supported","Require"};	
+	const char *header_name[] = {"Call-ID","Via","To:","From","CSeq","Content-Length","Contact","Allow","Supported","Require"};	
 							
 							
 	sprintf(S200,"SIP/2.0 200 OK\r\n");
@@ -647,7 +647,7 @@ void res_test_200_ok_ring(char* S44,char* S11){
 				
 	}
 	strcat(S200, "\r\n");
-	sprintf(S44,S200);
+	strcpy(S44,S200);
 }
 //********************************************************************************
 
@@ -657,7 +657,7 @@ void res_test_200_ok_ring(char* S44,char* S11){
 void res_sub_200_ok(char* S44,char* S11){
 	char Sub200[4000],SS2[2000];
 	int flag=0;
-	char *header_name[] = {"Via","From","To:","Call-ID","Expires"
+	const char *header_name[] = {"Via","From","To:","Call-ID","Expires"
 							,"Contact","Record-Route","CSeq","Content-Length"};
 							
 	sprintf(Sub200,"SIP/2.0 200 OK\r\n");
@@ -687,14 +687,14 @@ void res_sub_200_ok(char* S44,char* S11){
 		}
 	}
 	strcat(Sub200, "\r\n");
-	sprintf(S44,Sub200);
+	strcpy(S44,Sub200);
 	
 }
 
 void res_notify(char* S44,char* S11){
 	char notify[4000],SS2[2000];
 	int flag=0;
-	char *header_name[] = {"Via","From","To:","Subscription-State","EVENT","Expires","Call-ID"
+	const char *header_name[] = {"Via","From","To:","Subscription-State","EVENT","Expires","Call-ID"
 							,"Contact","Max-Forwards","CSeq","Content-Type","Content-Length"};
 							
 	sprintf(notify,"NOTIFY sip:+886987654321@test.3gpp.com SIP/2.0\r\n");
@@ -761,7 +761,7 @@ void res_notify(char* S44,char* S11){
 	
 	
 	//strcat(notify, "\r\n");
-	sprintf(S44,notify);
+	strcpy(S44,notify);
 }
 
 

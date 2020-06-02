@@ -1,12 +1,37 @@
 // UDP.cpp : Defines the entry point for the console application.
 //
 
-#include "stdafx.h"
+#if defined(_MSC_VER)
+	// Load TCPIP Library
+	#pragma comment(lib,"ws2_32.lib")
+	#include <winsock2.h>
+	#include <stdlib.h>
+#else
+	#include <stdio.h>
+	#include <stdlib.h>
+	#include <string.h>
+	#include <unistd.h>
+	#include <time.h>
+	#include <sys/socket.h>
+	#include <sys/types.h>
+	#include <netinet/in.h>
+	#include <sys/select.h>
+	#include <sys/ioctl.h>
+	#include <linux/if.h>
+	#include <linux/if_tun.h>
+	#include <netinet/ip.h>
+	#include <netinet/tcp.h>
+	#include <netinet/udp.h>
+	#include <arpa/inet.h>
+	#include <fcntl.h>
+	#include <pthread.h>
+	#include <stdint.h>
+
+	typedef int SOCKET;
+#endif	// OS
+
+#include "StdAfx.h"
 #include "AKAv1-MD5/Authentication.cpp"
-// Load TCPIP Library
-#pragma comment(lib,"ws2_32.lib")
-#include <winsock2.h>
-#include <stdlib.h>
 #include "Sip_Response/Sip_Response.cpp"
 
 int caller = 0;
@@ -14,18 +39,22 @@ int caller = 0;
 int main(int argc, char* argv[])
 {
 	// Variable Definition
+#if defined(_MSC_VER)
 	WSADATA     wsa;
+	WSAStartup(0x202,&wsa);
+#endif
+
 	SOCKET      Sock;
 	sockaddr_in Addr;
-	int         i,Len=sizeof(sockaddr);
+	int         i;
+	unsigned int Len=sizeof(sockaddr);
 	char        S1[101000],S2[8000],S3[8000],S5[1000];
 	int j=0;
 
     system("ipconfig");
     // 1. Start UDP Server
-    WSAStartup(0x202,&wsa);
+    
     Sock=socket(AF_INET,SOCK_DGRAM,0);
-	
 	Addr.sin_family=AF_INET;
 	Addr.sin_port=htons(5060);
 	Addr.sin_addr.s_addr=htonl(INADDR_ANY);
@@ -62,7 +91,7 @@ int main(int argc, char* argv[])
 			con_flag++;
 		  }
 
-		  //´ú¸Õ¥ÎINVITE
+		  //ï¿½ï¿½ï¿½Õ¥ï¿½INVITE
 		  else if(new_cmd==4){
 			  
 			if(caller)
@@ -72,7 +101,7 @@ int main(int argc, char* argv[])
 				while(!feof(fp))
 				{
 					memset(szTest, 0, sizeof(szTest));
-					fgets(szTest, sizeof(szTest) - 1, fp); // ¥]§t¤F´«¦æ²Å
+					fgets(szTest, sizeof(szTest) - 1, fp); // ï¿½]ï¿½tï¿½Fï¿½ï¿½ï¿½ï¿½ï¿½
 					printf("%s", szTest);
 
 					strcat(S4,szTest);
@@ -84,13 +113,13 @@ int main(int argc, char* argv[])
 				continue;
 		  }
 
-		  //´ú¸Õ¥ÎClient
+		  //ï¿½ï¿½ï¿½Õ¥ï¿½Client
 		  else if(new_cmd==12){
 			res_test_200_ok(S4,S1);
 		  }
 
 
-		  //´ú¸Õ¥Î100 trying
+		  //ï¿½ï¿½ï¿½Õ¥ï¿½100 trying
 		  else if(new_cmd==5){
 			  memset(S4, 0, sizeof(S4));
 			  res_test_100_trying(S4,S1);
@@ -118,7 +147,7 @@ int main(int argc, char* argv[])
 			  continue;
 		  }
 
-		  //´ú¸Õ¥ÎRTP
+		  //ï¿½ï¿½ï¿½Õ¥ï¿½RTP
 		   else if(new_cmd==-6){
 			  con_flag = -6;
 			  printf("##################");
