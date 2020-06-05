@@ -16,7 +16,7 @@
 #define RETURN			TraceLine();return
 
 //--- controlling flags
-const int caller = 1;			// 1: make the server be the "caller" role, 0: make the server be the "callee" role
+const int caller = 0;			// 1: make the server be the "caller" role, 0: make the server be the "callee" role
 const int direct_200 = 1;		// 1: respond 180 and 200 directly after receiving invite, 0: respond 183 first after receiving invite
 const int g_Register = 1;		// 1: register when the server start up, 0: do nothing
 const int send_0sipcqi1 = 1;	// 1: send 0SIP_CQI1 command before sending 183 or 200 OK for INVITE, 0: do not send

@@ -2,7 +2,7 @@
 
 The server supports basic initial attach and volte functions.
 The version is developed based on the purpose of feasibility verification of internal calls of cellphones, so the server is somewhat unstable, incomplete.
-In the purpose, the server send 0sSIP_CQI1 command as "create bearer request" which use s1ap protocol channel to deliver this command instead of sgi-s5-s11 protocols.
+In the purpose, the server sends 0sSIP_CQI1 command as "create bearer request" which use s1ap protocol channel to deliver this command instead of sgi-s5-s11 protocols.
 The server has two roles, Caller and Callee, and it can play one of the caller or callee roles at the same time.
 
 
@@ -32,7 +32,7 @@ The server has two roles, Caller and Callee, and it can play one of the caller o
     │  (Cellphone)  │       │               │               │   (SIP UA)    │
     │               │       │               │               │               │
     │               │       │               │   REGISTER    │               │
-    │     (PDN_IP)  ├──────▶│               │──────────────▶│ g_Local_IP:   │
+    │     (PDN_IP)  ├──────▶│               ├──────────────▶│ g_Local_IP:   │
     │ g_Target_Virtual_IP:  │ g_Target_Real_IP:             │ g_Local_Port  │
     │ g_Target_SIP_Port     │ g_Target_SIP_Port             │               │
     │               │       │               │               │               │
@@ -40,7 +40,7 @@ The server has two roles, Caller and Callee, and it can play one of the caller o
     │               │       │               │               │               │
     │               │       │ g_Target_External_Meida_IP    │               │
     │               │       │           (PGW_IP)            │ g_Meida_IP:   │
-    │               ├◀=====▶│               │◀=============▶│ g_Meida_Port  │
+    │               │◀=====▶│               │◀=============▶│ g_Meida_Port  │
     └───────┬───────┘       └───────┬───────┘               └───────┬───────┘
             │                       │                               │
             │                       │                               │
@@ -74,7 +74,7 @@ The server has two roles, Caller and Callee, and it can play one of the caller o
     │  (CellPhone ) │       │               │               │               │               │   (SIP UA)    │
     │               │       │               │               │               │               │               │
     │               │       │               │   REGISTER    │               │   REGISTER    │               │
-    │      (PDN_IP) ├──────▶│               │──────────────▶│               │◀──────────────┤ g_Local_IP:   │
+    │      (PDN_IP) ├──────▶│               ├──────────────▶│               │◀──────────────┤ g_Local_IP:   │
     │ g_Target_Virtual_IP:  │               │               │ g_Target_Real_IP:             │ g_Local_Port  │
     │ g_Target_SIP_Port     │               │               │ g_Target_SIP_Port             │               │
     │               │       │               │               │               │               │               │
@@ -82,7 +82,7 @@ The server has two roles, Caller and Callee, and it can play one of the caller o
     │               │       │               │               │               │               │               │
     │               │       │ g_Target_External_Meida_IP    │               │               │               │
     │               │       │           (PGW_IP)            │               │               │ g_Meida_IP:   │
-    │               ├◀=====▶│               │◀=============▶│               │◀=============▶│ g_Meida_Port  │
+    │               ├◀=====▶│               │◀=============================================▶│ g_Meida_Port  │
     └───────┬───────┘       └───────┬───────┘               └───────┬───────┘               └───────┬───────┘
             │                       │                               │                               │
             │                       │                               │                               │
@@ -115,7 +115,7 @@ ubuntu 18.04
 	$ make
 
 	# run server before the cellphone registering if the server acts as the IMS server
-	# run server after the p_cscf server start up if the server acts as a SIP UA
+	# run server after the p_cscf server starts up if the server acts as a SIP UA
 	$ sudo ./ims.out
 	```
 
@@ -129,10 +129,10 @@ ubuntu 18.04
 If wireshark shows the server always responds 401 responses for register packets, it has follows causes:
 * **Check if the parameters of SIP content are filled out wrong values, such as Call-ID, Branch?**
 	It probably has bugs. Debug or re-execute the server.
-* **Check if 401 responses with wrong gtp teids?**
+* **Check if 401 responses with wrong gtp teid?**
 	It probably has bugs. Debug or re-execute the server.
-* Check if SIP TCP connection established or rejected successfully?
-	The cause of the problem is that TCP forwarding failed, which has bugs. Debug or re-execute the server.
+* **Check if SIP TCP connection established or rejected successfully?**
+	The cause of the problem is that TCP forwarding failed in EPC_Server, which has bugs. Debug or re-execute the server.
 
 #### 404 Not Found
 If wireshark shows 404 Not Found when inviting, please check follows:
@@ -148,9 +148,9 @@ If wireshark don't show any rtp packets after sip inviting procedure acknowledge
 * **Check if the config of p_cscf's SIP_ALG_ENABLE is disabled when p_cscf act as the IMS server?**
 	Give it a false value.
 * **Check if wireshark shows E-RABSetupResponse [RadioNetwork-cause=unknown-enb-ue-s1ap-id]**
-	Enalbe the cellphone's airplan mode and disable it, and make a call again.
+	Enable the cellphone's airplane mode and disable it, and make a call again.
 * **Check if wireshark shows E-RABSetupResponse [RadioNetwork-cause=multiple-E-RAB-ID-instances]**
-	Enalbe the cellphone's airplan mode and disable it, and make a call again.
+	Enable the cellphone's airplane mode and disable it, and make a call again.
 
 #### No sound but Wireshark shows rpt packets
 If there is no sound but Wireshark shows rpt packets, please check follows:
@@ -158,12 +158,12 @@ If there is no sound but Wireshark shows rpt packets, please check follows:
   	Give a AMRWB encoded audio file.
 * **Check if g_Meida_IP/g_Meida_Port/g_Target_External_Meida_IP are correct?**
 	Give it correct values.
-* **Check if send_0sipcqi1 is disable when p_cscf act as the IMS server?**
-	Give it a false value;
+* **Check if send_0sipcqi1 flag is disable when p_cscf act as the IMS server?**
+	Give it a false value.
 
 #### Intermittent sound
 The cause of intermittent sound is probably related to RTP timestamp.
 It needs to research the timestamp of the cellphone in the future, especially the timestamp of Voice Activity Detection (VAD).
 
 #### Program crash
-Debug or re-execute the server.
+Debug it or re-execute the server.
